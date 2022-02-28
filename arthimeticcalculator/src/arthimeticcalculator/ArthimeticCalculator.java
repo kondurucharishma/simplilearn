@@ -4,7 +4,7 @@ public class ArthimeticCalculator
 {
 	public static void main(String[] args) {
 		double a, b, ans;
-		//char operator;
+		char operator;
 		int choice;
 		Scanner scan= new Scanner(System.in);
 		System.out.println("Choose an operator : +, -, *, / ");
@@ -33,5 +33,5 @@ public class ArthimeticCalculator
 	{
 		System.out.println("\n Invalid Choice");
 		}
-}
+	}
 }
