@@ -1,26 +1,51 @@
+import java.util.Scanner;
 public class LIS {
-	// Function to find the length of the longest increasing subsequence
-    public static int LIS(int[] arr, int i, int n, int prev)
-    {
-        // Base case: nothing is remaining
-        if (i == n) {
-        return 0;
-        }
-        // case 1: exclude the current element and process the
-        // remaining elements
-        int excl = LIS(arr, i + 1, n, prev);
-        // case 2: include the current element if it is greater
-        // than the previous element in LIS
-        int incl = 0;
-        if (arr[i] > prev) {
-            incl = 1 + LIS(arr, i + 1, n, arr[i]);
-        }
-        // return the maximum of the above two choices
-        return Integer.max(incl, excl);
-    }
-	public static void main(String[] args) {
-		int[] arr = { 0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15 };
-		System.out.println("The length of the LIS is "
-                        + LIS(arr, 0, arr.length, Integer.MIN_VALUE));
+	public int[] lis(int[] x) {
+		int n= x.length - 1;
+		int[] a=new int[n+1];
+		int[] b=new int[n+1];
+		int c=0;
+		for (int i=1; i<n+1; i++)
+		{
+			int j=0;
+			for (int L=c; L>=1; L--)
+			{
+				if(x[a[L]]<x[i])
+				{
+					j=L;
+					break;
+				}
+			}
+			b[i]=a[j];
+			if (j == c || x[i]<x[a[j+1]])
+			{
+				a[j+1]=i;
+				c=Math.max(c,j+1);
+			}
+		}
+		int[] result=new int[c];
+		int L=a[c];
+		for (int i=c-1; i>=0; i--)
+		{
+			result[i]=x[L];
+			L=b[L];
+		}
+		return result;
 	}
+	
+    	public static void main(String[] args) {
+    	Scanner scan = new Scanner(System.in);
+    	System.out.println("Enter number of elements");
+    	int n=scan.nextInt();
+    	int[] arr=new int[n+1];
+    	System.out.println("Enter "+ n + " elements");
+    	for (int i=1; i<=n; i++)
+    		arr[i]=scan.nextInt();
+    	LIS obj=new LIS();
+    	int[] result=obj.lis(arr);
+    	System.out.println("\nLongest Increasing Subsequence: ");
+    	for (int i=0; i < result.length; i++)
+    		System.out.println(result[i] + " ");
+    		System.out.println();
+		}
 }
